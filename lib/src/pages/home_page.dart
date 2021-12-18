@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Routes'),
+          title: const Text('Routes'),
         ),
         body: _routes == null
             ? const SizedBox.square(
