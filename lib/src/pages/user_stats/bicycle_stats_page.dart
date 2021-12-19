@@ -25,7 +25,7 @@ class _BikeStatsPageState extends State<BikeStatsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Estadisticas de bicicleta'),
+        title: Text('Recorridos en bicicleta previos'),
       ),
       body: ListView(children: [
         _listWalk == null

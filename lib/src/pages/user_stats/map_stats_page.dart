@@ -35,8 +35,13 @@ class _MapStatsPageState extends State<MapStatsPage> {
         mapType: MapType.normal,
         initialCameraPosition: CameraPosition(
           target: LatLng(
-              _walk.startingPoint!.latitude!, _walk.startingPoint!.longitude!),
-          zoom: 17,
+              (_walk.startingPoint!.latitude! +
+                      _walk.finishingPoint!.latitude!) /
+                  2,
+              (_walk.startingPoint!.longitude! +
+                      _walk.finishingPoint!.longitude!) /
+                  2),
+          zoom: 15.5,
           tilt: 50,
         ),
         myLocationEnabled: true,

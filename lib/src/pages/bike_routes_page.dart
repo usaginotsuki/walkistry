@@ -3,14 +3,14 @@ import 'package:walkistry_flutter/src/models/route_model.dart';
 import 'package:walkistry_flutter/src/services/route_service.dart';
 import '../widgets/route_widget.dart';
 
-class HomePage extends StatefulWidget {
-  HomePage({Key? key}) : super(key: key);
+class BikeRoutesPage extends StatefulWidget {
+  BikeRoutesPage({Key? key}) : super(key: key);
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _BikeRoutesPageState createState() => _BikeRoutesPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _BikeRoutesPageState extends State<BikeRoutesPage> {
   final RouteHelper _routeHelper = RouteHelper();
   List<Routes>? _routes;
 
@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Rutas de caminata'),
+          title: const Text('Rutas en bicicleta'),
         ),
         body: _routes == null
             ? const Center(

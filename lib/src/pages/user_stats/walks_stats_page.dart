@@ -25,7 +25,7 @@ class _WalkStatsPageState extends State<WalkStatsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Estadisticas de caminata'),
+        title: Text('Caminatas previas'),
       ),
       body: ListView(children: [
         _listWalk == null

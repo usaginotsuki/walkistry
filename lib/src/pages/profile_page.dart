@@ -167,6 +167,71 @@ class _UserPageState extends State<UserPage> {
                               ),
                             ),
                           ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => BikeStatsPage()));
+                            },
+                            child: Card(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15.0),
+                              ),
+                              margin: const EdgeInsets.all(15),
+                              elevation: 10,
+                              child: Column(
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(15.0),
+                                    child: Image.network(
+                                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlijGC2YdXHHsF3gBszHr0Fw2zV4ThaPHX5vfnt_oXCJp-DNeZgN6xDkpvt2O3lvPOrgI&usqp=CAU",
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  Container(
+                                      padding: const EdgeInsets.all(10),
+                                      child: const Text(
+                                        "Estadisticas",
+                                        textScaleFactor: 1.5,
+                                      ))
+                                ],
+                              ),
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => BikeStatsPage()));
+                            },
+                            child: Card(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15.0),
+                              ),
+                              margin: const EdgeInsets.all(15),
+                              elevation: 10,
+                              child: Column(
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(15.0),
+                                    child: Image.network(
+                                      "https://www.vhv.rs/dpng/d/563-5639120_transparent-setting-clipart-settings-button-transparent-background-hd.png",
+                                      fit: BoxFit.fitHeight,
+                                      height: 110,
+                                    ),
+                                  ),
+                                  Container(
+                                      padding: const EdgeInsets.all(10),
+                                      child: const Text(
+                                        "Editar perfil",
+                                        textScaleFactor: 1.5,
+                                      ))
+                                ],
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ],

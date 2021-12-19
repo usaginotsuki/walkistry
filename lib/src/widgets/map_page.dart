@@ -35,8 +35,10 @@ class _MapPageState extends State<MapPage> {
         mapType: MapType.normal,
         initialCameraPosition: CameraPosition(
           target: LatLng(
-              _route.routeStart!.latitude!, _route.routeStart!.longitude!),
-          zoom: 17,
+              (_route.routeStart!.latitude! + _route.routeStop!.latitude!) / 2,
+              (_route.routeStart!.longitude! + _route.routeStop!.longitude!) /
+                  2),
+          zoom: 15.5,
           tilt: 50,
         ),
         myLocationEnabled: true,
