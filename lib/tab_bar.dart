@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:walkistry_flutter/src/pages/bike_routes_page.dart';
 import 'package:walkistry_flutter/src/pages/walk_routes_page.dart';
-import 'package:walkistry_flutter/src/pages/user_page.dart';
+import 'package:walkistry_flutter/src/pages/profile_page.dart';
 
 class HomeTabBar extends StatefulWidget {
   const HomeTabBar({Key? key}) : super(key: key);
@@ -13,26 +14,31 @@ class _HomeTabBarState extends State<HomeTabBar> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 4,
       child: Scaffold(
         appBar: AppBar(
-          title: const Center(child: Text('Walkistry')),
-          bottom: const TabBar(
+          title: const TabBar(
             tabs: [
               Tab(
-                text: 'Caminata',
+                text: 'Caminar',
                 icon: Icon(Icons.directions_walk),
               ),
               Tab(
-                icon: Icon(Icons.search),
+                text: 'Bicicleta',
+                icon: Icon(Icons.directions_bike),
               ),
-              Tab(icon: Icon(Icons.person), text: 'Estadisticas'),
+              Tab(
+                icon: Icon(Icons.group),
+                text: 'Grupos',
+              ),
+              Tab(icon: Icon(Icons.person), text: 'Perfil'),
             ],
           ),
         ),
         body: TabBarView(
           children: [
             HomePage(),
+            BikeRoutesPage(),
             const Center(
               child: Text('Search'),
             ),
