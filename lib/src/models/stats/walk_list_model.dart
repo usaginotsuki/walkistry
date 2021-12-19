@@ -52,11 +52,11 @@ class Date {
     this.nanoseconds,
   });
 
-  int? seconds;
+  DateTime? seconds;
   int? nanoseconds;
 
   factory Date.fromJson(Map<String, dynamic> json) => Date(
-        seconds: json["_seconds"],
+        seconds: DateTime.fromMillisecondsSinceEpoch(json["_seconds"] * 1000),
         nanoseconds: json["_nanoseconds"],
       );
 
