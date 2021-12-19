@@ -1,49 +1,70 @@
 // To parse this JSON data, do
 //
-//     final user = userFromJson(jsonString);
+//     final User = UserFromJson(jsonString);
 
 import 'dart:convert';
 
-User userFromJson(String str) => User.fromJson(json.decode(str));
+User UserFromJson(String str) => User.fromJson(json.decode(str));
 
-String userToJson(User data) => json.encode(data.toJson());
+String UserToJson(User data) => json.encode(data.toJson());
 
 class User {
-  User({
-    this.accountId,
-    this.name,
-    this.dateOfBirth,
-    this.height,
-    this.weight,
-    this.exerciseTarget,
-    this.weigthTarget,
-  });
+  User(
+      {this.weight,
+      this.weigthTarget,
+      this.dateOfBirth,
+      this.height,
+      this.name,
+      this.exerciseTarget,
+      this.avatar,
+      this.background});
 
-  String? accountId;
-  String? name;
-  DateTime? dateOfBirth;
-  int? height;
   int? weight;
-  int? exerciseTarget;
   int? weigthTarget;
+  DateOfBirth? dateOfBirth;
+  int? height;
+  String? name;
+  int? exerciseTarget;
+  String? avatar;
+  String? background;
 
   factory User.fromJson(Map<String, dynamic> json) => User(
-        accountId: json["account_id"],
-        name: json["name"],
-        dateOfBirth: DateTime.parse(json["date_of_birth"]),
-        height: json["height"],
         weight: json["weight"],
-        exerciseTarget: json["exercise_target"],
-        weigthTarget: json["weigth_target"],
+        weigthTarget: json["weigthTarget"],
+        dateOfBirth: DateOfBirth.fromJson(json["dateOfBirth"]),
+        height: json["height"],
+        name: json["name"],
+        exerciseTarget: json["exerciseTarget"],
+        avatar: json["avatar"],
+        background: json["background"],
       );
 
   Map<String, dynamic> toJson() => {
-        "account_id": accountId,
-        "name": name,
-        "date_of_birth": dateOfBirth!.toIso8601String(),
-        "height": height,
         "weight": weight,
-        "exercise_target": exerciseTarget,
-        "weigth_target": weigthTarget,
+        "weigthTarget": weigthTarget,
+        "dateOfBirth": dateOfBirth!.toJson(),
+        "height": height,
+        "name": name,
+        "exerciseTarget": exerciseTarget,
+      };
+}
+
+class DateOfBirth {
+  DateOfBirth({
+    this.seconds,
+    this.nanoseconds,
+  });
+
+  DateTime? seconds;
+  int? nanoseconds;
+
+  factory DateOfBirth.fromJson(Map<String, dynamic> json) => DateOfBirth(
+        seconds: DateTime.fromMillisecondsSinceEpoch(json["_seconds"] * 1000),
+        nanoseconds: json["_nanoseconds"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "_seconds": seconds,
+        "_nanoseconds": nanoseconds,
       };
 }

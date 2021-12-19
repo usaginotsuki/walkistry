@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:walkistry_flutter/src/pages/home_page.dart';
+import 'package:walkistry_flutter/src/pages/walk_routes_page.dart';
+import 'package:walkistry_flutter/src/pages/user_page.dart';
 
 class HomeTabBar extends StatefulWidget {
   const HomeTabBar({Key? key}) : super(key: key);
@@ -15,7 +16,7 @@ class _HomeTabBarState extends State<HomeTabBar> {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Walkistry'),
+          title: const Center(child: Text('Walkistry')),
           bottom: const TabBar(
             tabs: [
               Tab(
@@ -25,9 +26,7 @@ class _HomeTabBarState extends State<HomeTabBar> {
               Tab(
                 icon: Icon(Icons.search),
               ),
-              Tab(
-                icon: Icon(Icons.person),
-              ),
+              Tab(icon: Icon(Icons.person), text: 'Estadisticas'),
             ],
           ),
         ),
@@ -37,9 +36,7 @@ class _HomeTabBarState extends State<HomeTabBar> {
             const Center(
               child: Text('Search'),
             ),
-            const Center(
-              child: Text("Third"),
-            )
+            UserPage()
           ],
         ),
       ),

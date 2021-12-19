@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:walkistry_flutter/src/models/route_model.dart';
 import 'package:walkistry_flutter/src/services/route_service.dart';
-import 'element_page.dart';
+import '../widgets/route_widget.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
@@ -27,10 +27,12 @@ class _HomePageState extends State<HomePage> {
           title: const Text('Routes'),
         ),
         body: _routes == null
-            ? const SizedBox.square(
-                key: Key("200"),
-                dimension: 300.0,
-                child: CircularProgressIndicator())
+            ? const Center(
+                child: SizedBox.square(
+                    key: Key("200"),
+                    dimension: 300.0,
+                    child: CircularProgressIndicator()),
+              )
             : _routes!.isEmpty
                 ? const Center(
                     child: Text("No hay elementos"),

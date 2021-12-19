@@ -7,7 +7,7 @@ import 'package:walkistry_flutter/src/models/route_model.dart';
 class RouteHelper {
   RouteHelper();
   final String _rootUrl =
-      'https://us-central1-walkistry.cloudfunctions.net/api/api/routes';
+      'https://us-central1-walkistry.cloudfunctions.net/api/routes';
 
   Future<List<Routes>?> getRoutes() async {
     try {
