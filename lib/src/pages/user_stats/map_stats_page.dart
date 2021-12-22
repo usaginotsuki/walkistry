@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors_in_immutables, override_on_non_overriding_member
+
 import 'dart:async';
 
 import 'package:flutter/material.dart';

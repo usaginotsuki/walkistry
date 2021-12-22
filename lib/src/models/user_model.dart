@@ -2,6 +2,8 @@
 //
 //     final User = UserFromJson(jsonString);
 
+// ignore_for_file: non_constant_identifier_names
+
 import 'dart:convert';
 
 User UserFromJson(String str) => User.fromJson(json.decode(str));

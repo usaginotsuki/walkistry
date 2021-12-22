@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors_in_immutables
+
 import 'package:flutter/material.dart';
 import 'package:walkistry_flutter/src/models/stats/walk_list_model.dart';
 import 'package:walkistry_flutter/src/services/user_service.dart';
@@ -25,7 +27,7 @@ class _BikeStatsPageState extends State<BikeStatsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Recorridos en bicicleta previos'),
+        title: const Text('Recorridos en bicicleta previos'),
       ),
       body: ListView(children: [
         _listWalk == null

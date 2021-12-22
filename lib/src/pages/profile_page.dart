@@ -1,10 +1,10 @@
+// ignore_for_file: prefer_const_constructors_in_immutables
+
 import 'package:flutter/material.dart';
 import 'package:walkistry_flutter/src/models/user_model.dart';
-import 'package:walkistry_flutter/src/models/stats/walk_list_model.dart';
 import 'package:walkistry_flutter/src/pages/user_stats/bicycle_stats_page.dart';
 import 'package:walkistry_flutter/src/pages/user_stats/walks_stats_page.dart';
 import 'package:walkistry_flutter/src/services/user_service.dart';
-import 'package:walkistry_flutter/src/widgets/walk_list_widget.dart';
 
 class UserPage extends StatefulWidget {
   UserPage({Key? key}) : super(key: key);
@@ -16,7 +16,6 @@ class UserPage extends StatefulWidget {
 class _UserPageState extends State<UserPage> {
   final UserHelper _userHelper = UserHelper();
 
-  List<WalkList>? _listWalk;
   User? _user;
 
   @override
@@ -29,7 +28,7 @@ class _UserPageState extends State<UserPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Usuario'),
+          title: const Text('Usuario'),
         ),
         body: _user == null
             ? const Center(
@@ -55,7 +54,7 @@ class _UserPageState extends State<UserPage> {
                           child: SizedBox(
                             height: 200,
                             child: Container(
-                              alignment: Alignment(0.0, 2.5),
+                              alignment: const Alignment(0.0, 2.5),
                               child: CircleAvatar(
                                 backgroundImage: NetworkImage(_user!.avatar ??
                                     'https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/1024px-User-avatar.svg.png'),
@@ -114,7 +113,7 @@ class _UserPageState extends State<UserPage> {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(15.0),
                               ),
-                              margin: EdgeInsets.all(15),
+                              margin: const EdgeInsets.all(15),
                               elevation: 10,
                               child: Column(
                                 children: [

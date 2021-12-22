@@ -15,12 +15,10 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
-  Brightness? _brightness;
   bool? _mode;
   @override
   void initState() {
     WidgetsBinding.instance?.addObserver(this);
-    _brightness = WidgetsBinding.instance?.window.platformBrightness;
     _setupPreferences();
     super.initState();
   }
@@ -34,9 +32,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   @override
   void didChangePlatformBrightness() {
     if (mounted) {
-      setState(() {
-        _brightness = WidgetsBinding.instance?.window.platformBrightness;
-      });
+      setState(() {});
     }
     super.didChangePlatformBrightness();
   }
@@ -46,7 +42,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     return MaterialApp(
       title: 'Material App',
       home: HomeTabBar(),
-      theme: AppTheme.themeData(_mode!),
+      theme: AppTheme.themeData(_mode ?? true),
     );
   }
 

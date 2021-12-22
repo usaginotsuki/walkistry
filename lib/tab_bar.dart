@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:walkistry_flutter/src/pages/bike_routes_page.dart';
@@ -13,20 +15,30 @@ class HomeTabBar extends StatefulWidget {
 
 class _HomeTabBarState extends State<HomeTabBar> {
   bool _switchValue = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _setupMode();
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 4,
       child: Scaffold(
         appBar: AppBar(
-          leading: Switch(
-              value: _switchValue,
-              onChanged: (value) async {
-                _switchValue = value;
-                SharedPreferences prefs = await SharedPreferences.getInstance();
-                prefs.setBool('mode', value);
-                setState(() {});
-              }),
+          leading: _switchValue == null
+              ? null
+              : Switch(
+                  value: _switchValue,
+                  onChanged: (value) async {
+                    _switchValue = value;
+                    SharedPreferences prefs =
+                        await SharedPreferences.getInstance();
+                    prefs.setBool('mode', value);
+                    setState(() {});
+                  }),
           title: const TabBar(
             tabs: [
               Tab(
@@ -57,5 +69,11 @@ class _HomeTabBarState extends State<HomeTabBar> {
         ),
       ),
     );
+  }
+
+  void _setupMode() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    _switchValue = prefs.getBool('mode') ?? true;
+    setState(() {});
   }
 }

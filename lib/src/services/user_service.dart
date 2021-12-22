@@ -18,7 +18,6 @@ class UserHelper {
       if (response.body.isEmpty) {
         return null;
       }
-      print(json.decode(response.body));
       user = User.fromJson(json.decode(response.body));
 
       return user;
@@ -40,7 +39,6 @@ class UserHelper {
       for (var walk in json.decode(response.body)) {
         walks.add(WalkList.fromJson(walk));
       }
-      print(walks);
       return walks;
     } catch (e) {
       return null;
