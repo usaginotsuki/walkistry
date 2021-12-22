@@ -14,11 +14,31 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
+  Brightness? _brightness;
+  bool? _mode;
   @override
   void initState() {
-    _setupMode();
+    WidgetsBinding.instance?.addObserver(this);
+    _brightness = WidgetsBinding.instance?.window.platformBrightness;
+    _setupPreferences();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance?.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangePlatformBrightness() {
+    if (mounted) {
+      setState(() {
+        _brightness = WidgetsBinding.instance?.window.platformBrightness;
+      });
+    }
+    super.didChangePlatformBrightness();
   }
 
   @override
@@ -26,13 +46,13 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'Material App',
       home: HomeTabBar(),
-      theme: AppTheme.themeData(false),
+      theme: AppTheme.themeData(_mode!),
     );
   }
 
-  _setupMode() async {
+  _setupPreferences() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool('mode', true);
-    bool? mode = prefs.getBool('mode');
+    _mode = prefs.getBool('mode') ?? true;
+    setState(() {});
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:walkistry_flutter/src/pages/bike_routes_page.dart';
 import 'package:walkistry_flutter/src/pages/walk_routes_page.dart';
 import 'package:walkistry_flutter/src/pages/profile_page.dart';
@@ -11,12 +12,21 @@ class HomeTabBar extends StatefulWidget {
 }
 
 class _HomeTabBarState extends State<HomeTabBar> {
+  bool _switchValue = false;
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 4,
       child: Scaffold(
         appBar: AppBar(
+          leading: Switch(
+              value: _switchValue,
+              onChanged: (value) async {
+                _switchValue = value;
+                SharedPreferences prefs = await SharedPreferences.getInstance();
+                prefs.setBool('mode', value);
+                setState(() {});
+              }),
           title: const TabBar(
             tabs: [
               Tab(
