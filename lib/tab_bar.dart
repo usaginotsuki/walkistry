@@ -1,10 +1,12 @@
 // ignore_for_file: unnecessary_null_comparison
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:walkistry_flutter/src/pages/bike_routes_page.dart';
 import 'package:walkistry_flutter/src/pages/walk_routes_page.dart';
 import 'package:walkistry_flutter/src/pages/profile_page.dart';
+import 'package:walkistry_flutter/src/providers/main_provider.dart';
 
 class HomeTabBar extends StatefulWidget {
   const HomeTabBar({Key? key}) : super(key: key);
@@ -14,31 +16,25 @@ class HomeTabBar extends StatefulWidget {
 }
 
 class _HomeTabBarState extends State<HomeTabBar> {
-  bool _switchValue = false;
-
   @override
   void initState() {
     super.initState();
-    _setupMode();
   }
 
   @override
   Widget build(BuildContext context) {
+    final mainProvider = Provider.of<MainProvider>(context, listen: true);
     return DefaultTabController(
       length: 4,
       child: Scaffold(
         appBar: AppBar(
-          leading: _switchValue == null
-              ? null
-              : Switch(
-                  value: _switchValue,
-                  onChanged: (value) async {
-                    _switchValue = value;
-                    SharedPreferences prefs =
-                        await SharedPreferences.getInstance();
-                    prefs.setBool('mode', value);
-                    setState(() {});
-                  }),
+          leading: Switch(
+              value: mainProvider.mode,
+              onChanged: (value) async {
+                mainProvider.mode = value;
+                SharedPreferences prefs = await SharedPreferences.getInstance();
+                prefs.setBool('mode', value);
+              }),
           title: const TabBar(
             tabs: [
               Tab(
@@ -69,11 +65,5 @@ class _HomeTabBarState extends State<HomeTabBar> {
         ),
       ),
     );
-  }
-
-  void _setupMode() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    _switchValue = prefs.getBool('mode') ?? true;
-    setState(() {});
   }
 }

@@ -1,54 +1,51 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:walkistry_flutter/src/providers/main_provider.dart';
 import 'package:walkistry_flutter/src/themes/app_theme.dart';
 import 'tab_bar.dart';
+import 'package:provider/provider.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => MainProvider()),
+        ],
+        child: MyApp(
+          mode: true,
+        )));
 
-class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
-  bool? _mode;
-  @override
-  void initState() {
-    WidgetsBinding.instance?.addObserver(this);
-    _setupPreferences();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    WidgetsBinding.instance?.removeObserver(this);
-    super.dispose();
-  }
-
-  @override
-  void didChangePlatformBrightness() {
-    if (mounted) {
-      setState(() {});
-    }
-    super.didChangePlatformBrightness();
-  }
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key, required this.mode}) : super(key: key);
+  final bool? mode;
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Material App',
-      home: HomeTabBar(),
-      theme: AppTheme.themeData(_mode ?? true),
-    );
-  }
+    final mainProvider = Provider.of<MainProvider>(context, listen: true);
+    return FutureBuilder<bool>(
+        future: mainProvider.initPrefs(),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return const SizedBox.square(
+              child: Center(
+                child: Text('Error'),
+              ),
+            );
+          }
 
-  _setupPreferences() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    _mode = prefs.getBool('mode') ?? true;
-    setState(() {});
+          if (snapshot.hasData) {
+            return MaterialApp(
+                title: 'Material App',
+                home: HomeTabBar(),
+                theme: AppTheme.themeData(mainProvider.mode));
+          }
+          return const SizedBox.square(
+            child: Center(child: CircularProgressIndicator()),
+          );
+
+          /*MaterialApp(
+            title: 'Material App',
+            home: HomeTabBar(),
+            theme: AppTheme.themeData(mode ?? true),*/
+        });
   }
 }
