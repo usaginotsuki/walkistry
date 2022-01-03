@@ -3,10 +3,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:walkistry_flutter/src/models/user_model.dart';
 import 'package:walkistry_flutter/src/pages/bike_routes_page.dart';
 import 'package:walkistry_flutter/src/pages/walk_routes_page.dart';
 import 'package:walkistry_flutter/src/pages/profile_page.dart';
 import 'package:walkistry_flutter/src/providers/main_provider.dart';
+import 'package:walkistry_flutter/src/widgets/profile_widget.dart';
 
 class HomeTabBar extends StatefulWidget {
   const HomeTabBar({Key? key}) : super(key: key);
@@ -25,9 +27,57 @@ class _HomeTabBarState extends State<HomeTabBar> {
   Widget build(BuildContext context) {
     final mainProvider = Provider.of<MainProvider>(context, listen: true);
     return DefaultTabController(
-      length: 4,
-      child: Scaffold(
-        appBar: AppBar(
+        length: 4,
+        child: CustomScrollView(slivers: [
+          SliverFixedExtentList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                return UserPage();
+              },
+              childCount: 1,
+            ),
+            itemExtent: 450,
+          ),
+          const SliverAppBar(
+            toolbarHeight: 15,
+            expandedHeight: 0,
+            floating: false,
+            pinned: true,
+            backgroundColor: Colors.red,
+            flexibleSpace: TabBar(
+              tabs: [
+                Tab(
+                  text: 'Caminar',
+                  icon: Icon(Icons.directions_walk),
+                ),
+                Tab(
+                  text: 'Bicicleta',
+                  icon: Icon(Icons.directions_bike),
+                ),
+                Tab(
+                  icon: Icon(Icons.group),
+                  text: 'Grupos',
+                ),
+                Tab(icon: Icon(Icons.person), text: 'Perfil'),
+              ],
+            ),
+          ),
+          SliverFillRemaining(
+            child: TabBarView(
+              children: [
+                HomePage(),
+                BikeRoutesPage(),
+                const Center(
+                  child: Text('Search'),
+                ),
+                UserPage()
+              ],
+            ),
+          ),
+        ]));
+  }
+}
+        /*appBar: AppBar(
           leading: Switch(
               value: mainProvider.mode,
               onChanged: (value) async {
@@ -35,35 +85,87 @@ class _HomeTabBarState extends State<HomeTabBar> {
                 SharedPreferences prefs = await SharedPreferences.getInstance();
                 prefs.setBool('mode', value);
               }),
-          title: const TabBar(
-            tabs: [
-              Tab(
-                text: 'Caminar',
-                icon: Icon(Icons.directions_walk),
+        ),*/
+        /*body: NestedScrollView(
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return <Widget>[
+              SliverOverlapAbsorber(
+                handle:
+                    NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+                sliver: SliverAppBar(
+                  floating: true,
+                  pinned: true,
+                  snap: true,
+                  flexibleSpace: FlexibleSpaceBar(
+                    title: Text('Walkistry'),
+                    background: ProfileWidget(),
+                  ),
+                  forceElevated: innerBoxIsScrolled,
+                  bottom: TabBar(
+                    tabs: [
+                      Tab(
+                        text: 'Caminar',
+                        icon: Icon(Icons.directions_walk),
+                      ),
+                      Tab(
+                        text: 'Bicicleta',
+                        icon: Icon(Icons.directions_bike),
+                      ),
+                      Tab(
+                        icon: Icon(Icons.group),
+                        text: 'Grupos',
+                      ),
+                      Tab(icon: Icon(Icons.person), text: 'Perfil'),
+                    ],
+                  ),
+                ),
               ),
-              Tab(
-                text: 'Bicicleta',
-                icon: Icon(Icons.directions_bike),
+            ];
+          },
+          body: TabBarView(
+            children: [
+              HomePage(),
+              BikeRoutesPage(),
+              const Center(
+                child: Text('Search'),
               ),
-              Tab(
-                icon: Icon(Icons.group),
-                text: 'Grupos',
-              ),
-              Tab(icon: Icon(Icons.person), text: 'Perfil'),
+              UserPage()
             ],
           ),
-        ),
-        body: TabBarView(
-          children: [
-            HomePage(),
-            BikeRoutesPage(),
-            const Center(
-              child: Text('Search'),
+          /*return <Widget>[
+            SliverAppBar(
+              snap: false,
+              pinned: true,
+              title: Text("Silver AppBar With ToolBar"),
+              bottom: TabBar(
+                tabs: [
+                  Tab(
+                    text: 'Caminar',
+                    icon: Icon(Icons.directions_walk),
+                  ),
+                  Tab(
+                    text: 'Bicicleta',
+                    icon: Icon(Icons.directions_bike),
+                  ),
+                  Tab(
+                    icon: Icon(Icons.group),
+                    text: 'Grupos',
+                  ),
+                  Tab(icon: Icon(Icons.person), text: 'Perfil'),
+                ],
+              ),
             ),
-            UserPage()
+            SliverFillRemaining(
+              child: TabBarView(
+                children: [
+                  HomePage(),
+                  BikeRoutesPage(),
+                  const Center(
+                    child: Text('Search'),
+                  ),
+                  UserPage()
+                ],
+              ),
+            ),
           ],
-        ),
-      ),
-    );
-  }
-}
+        */*/

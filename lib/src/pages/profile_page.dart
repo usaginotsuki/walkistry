@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:walkistry_flutter/src/models/user_model.dart';
+import 'package:walkistry_flutter/src/pages/general_settings_page.dart';
 import 'package:walkistry_flutter/src/pages/user_stats/bicycle_stats_page.dart';
 import 'package:walkistry_flutter/src/pages/user_stats/walks_stats_page.dart';
 import 'package:walkistry_flutter/src/services/user_service.dart';
@@ -26,23 +27,21 @@ class _UserPageState extends State<UserPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text('Usuario'),
-        ),
-        body: _user == null
-            ? const Center(
-                child: SizedBox.square(
-                    key: Key("200"),
-                    dimension: 300.0,
-                    child: CircularProgressIndicator()),
-              )
-            : _user.toString().isEmpty
-                ? const Center(
-                    child: Text("No cuenta con un perfil"),
-                  )
-                : ListView(
-                    children: [
+    return SizedBox(
+      height: 450,
+      child: Scaffold(
+          body: _user == null
+              ? const Center(
+                  child: SizedBox.square(
+                      key: Key("200"),
+                      dimension: 300.0,
+                      child: CircularProgressIndicator()),
+                )
+              : _user.toString().isEmpty
+                  ? const Center(
+                      child: Text("No cuenta con un perfil"),
+                    )
+                  : ListView(children: [
                       Container(
                           decoration: BoxDecoration(
                             image: DecorationImage(
@@ -69,7 +68,7 @@ class _UserPageState extends State<UserPage> {
                         child: Text("\n" + _user!.name!,
                             style: const TextStyle(
                                 fontSize: 25.0,
-                                color: Colors.white,
+                                color: Colors.black,
                                 letterSpacing: 2.0,
                                 fontWeight: FontWeight.w600)),
                       ),
@@ -87,154 +86,157 @@ class _UserPageState extends State<UserPage> {
                               _user!.dateOfBirth!.seconds!.month.toString(),
                           style: const TextStyle(
                               fontSize: 15.0,
-                              color: Colors.white,
+                              color: Colors.black,
                               letterSpacing: 2.0,
                               fontWeight: FontWeight.w300),
                         ),
                       ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      GridView.count(
-                        crossAxisCount: 2,
-                        physics:
-                            const NeverScrollableScrollPhysics(), // to disable GridView's scrolling
-                        shrinkWrap: true, // You won't see infinite size error
+                      /*const SizedBox(
+                          height: 10,
+                        ),*/
+                      /* GridView.count(
+                          crossAxisCount: 2,
+                          physics:
+                              const NeverScrollableScrollPhysics(), // to disable GridView's scrolling
+                          shrinkWrap: true, // You won't see infinite size error
 
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => WalkStatsPage()));
-                            },
-                            child: Card(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15.0),
-                              ),
-                              margin: const EdgeInsets.all(15),
-                              elevation: 10,
-                              child: Column(
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(15.0),
-                                    child: Image.network(
-                                      "https://images.squarespace-cdn.com/content/v1/59402b922e69cfd68984f575/1561395329336-70ZVUDE8HP458RNXR8I0/44875714_S_Feet_Shoe_Sneakers_Walking_Road.jpg",
-                                      fit: BoxFit.cover,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => WalkStatsPage()));
+                              },
+                              child: Card(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                ),
+                                margin: const EdgeInsets.all(15),
+                                elevation: 10,
+                                child: Column(
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(15.0),
+                                      child: Image.network(
+                                        "https://images.squarespace-cdn.com/content/v1/59402b922e69cfd68984f575/1561395329336-70ZVUDE8HP458RNXR8I0/44875714_S_Feet_Shoe_Sneakers_Walking_Road.jpg",
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
-                                  ),
-                                  Container(
-                                      padding: const EdgeInsets.all(10),
-                                      child: const Text(
-                                        "Caminatas",
-                                        textScaleFactor: 1.5,
-                                      ))
-                                ],
+                                    Container(
+                                        padding: const EdgeInsets.all(10),
+                                        child: const Text(
+                                          "Caminatas",
+                                          textScaleFactor: 1.5,
+                                        ))
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => BikeStatsPage()));
-                            },
-                            child: Card(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15.0),
-                              ),
-                              margin: const EdgeInsets.all(15),
-                              elevation: 10,
-                              child: Column(
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(15.0),
-                                    child: Image.network(
-                                      "https://st.depositphotos.com/1011382/2840/i/600/depositphotos_28403577-stock-photo-moutain-bike-man.jpg",
-                                      fit: BoxFit.cover,
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => BikeStatsPage()));
+                              },
+                              child: Card(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                ),
+                                margin: const EdgeInsets.all(15),
+                                elevation: 10,
+                                child: Column(
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(15.0),
+                                      child: Image.network(
+                                        "https://st.depositphotos.com/1011382/2840/i/600/depositphotos_28403577-stock-photo-moutain-bike-man.jpg",
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
-                                  ),
-                                  Container(
-                                      padding: const EdgeInsets.all(10),
-                                      child: const Text(
-                                        "Bicicleta",
-                                        textScaleFactor: 1.5,
-                                      ))
-                                ],
+                                    Container(
+                                        padding: const EdgeInsets.all(10),
+                                        child: const Text(
+                                          "Bicicleta",
+                                          textScaleFactor: 1.5,
+                                        ))
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => BikeStatsPage()));
-                            },
-                            child: Card(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15.0),
-                              ),
-                              margin: const EdgeInsets.all(15),
-                              elevation: 10,
-                              child: Column(
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(15.0),
-                                    child: Image.network(
-                                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlijGC2YdXHHsF3gBszHr0Fw2zV4ThaPHX5vfnt_oXCJp-DNeZgN6xDkpvt2O3lvPOrgI&usqp=CAU",
-                                      fit: BoxFit.cover,
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => BikeStatsPage()));
+                              },
+                              child: Card(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                ),
+                                margin: const EdgeInsets.all(15),
+                                elevation: 10,
+                                child: Column(
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(15.0),
+                                      child: Image.network(
+                                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlijGC2YdXHHsF3gBszHr0Fw2zV4ThaPHX5vfnt_oXCJp-DNeZgN6xDkpvt2O3lvPOrgI&usqp=CAU",
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
-                                  ),
-                                  Container(
-                                      padding: const EdgeInsets.all(10),
-                                      child: const Text(
-                                        "Estadisticas",
-                                        textScaleFactor: 1.5,
-                                      ))
-                                ],
+                                    Container(
+                                        padding: const EdgeInsets.all(10),
+                                        child: const Text(
+                                          "Estadisticas",
+                                          textScaleFactor: 1.5,
+                                        ))
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => BikeStatsPage()));
-                            },
-                            child: Card(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15.0),
-                              ),
-                              margin: const EdgeInsets.all(15),
-                              elevation: 10,
-                              child: Column(
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(15.0),
-                                    child: Image.network(
-                                      "https://www.vhv.rs/dpng/d/563-5639120_transparent-setting-clipart-settings-button-transparent-background-hd.png",
-                                      fit: BoxFit.fitHeight,
-                                      height: 110,
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const GeneralSettingsPage()));
+                              },
+                              child: Card(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                ),
+                                margin: const EdgeInsets.all(15),
+                                elevation: 10,
+                                child: Column(
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(15.0),
+                                      child: Image.network(
+                                        "https://www.vhv.rs/dpng/d/563-5639120_transparent-setting-clipart-settings-button-transparent-background-hd.png",
+                                        fit: BoxFit.fitHeight,
+                                        height: 110,
+                                      ),
                                     ),
-                                  ),
-                                  Container(
-                                      padding: const EdgeInsets.all(10),
-                                      child: const Text(
-                                        "Editar perfil",
-                                        textScaleFactor: 1.5,
-                                      ))
-                                ],
+                                    Container(
+                                        padding: const EdgeInsets.all(10),
+                                        child: const Text(
+                                          "Configuración de la app",
+                                          textScaleFactor: 1,
+                                          textAlign: TextAlign.center,
+                                        ))
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ));
+                          ],
+                        ),
+                      ],*/
+                    ])),
+    );
   }
 
   _dowloadUser(String id) async {

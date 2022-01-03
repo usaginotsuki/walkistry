@@ -24,11 +24,8 @@ class _BikeRoutesPageState extends State<BikeRoutesPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text('Rutas en bicicleta'),
-        ),
-        body: _routes == null
+    return SizedBox(
+        child: _routes == null
             ? const Center(
                 child: SizedBox.square(
                     key: Key("200"),

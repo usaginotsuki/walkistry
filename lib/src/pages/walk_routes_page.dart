@@ -25,10 +25,8 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Rutas de caminata'),
-        ),
-        body: _routes == null
+      body: SafeArea(
+        child: _routes == null
             ? const Center(
                 child: SizedBox.square(
                     key: Key("200"),
@@ -42,7 +40,9 @@ class _HomePageState extends State<HomePage> {
                 : ListView(
                     children: _routes!
                         .map((e) => ElementWidget(element: e))
-                        .toList()));
+                        .toList()),
+      ),
+    );
   }
 
   _dowloadRoutes() async {
