@@ -2,8 +2,10 @@
 
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:walkistry_flutter/src/models/route_model.dart';
+import 'dart:developer';
 
 class MapPage extends StatefulWidget {
   // ignore: prefer_const_constructors_in_immutables
@@ -14,12 +16,17 @@ class MapPage extends StatefulWidget {
 }
 
 class _MapPageState extends State<MapPage> {
+  Set<Polyline> _polylines = {};
+  List<LatLng> _polylineCoordinates = [];
+  late PolylinePoints polylinePoints;
+
   List<Marker> _markers = <Marker>[];
   Routes _route = Routes();
   Completer<GoogleMapController> _controller = Completer();
 
   @override
   void initState() {
+    polylinePoints = PolylinePoints();
     _route = widget.route;
     _addMarker(_route);
     super.initState();
@@ -44,7 +51,9 @@ class _MapPageState extends State<MapPage> {
         myLocationEnabled: true,
         onMapCreated: (GoogleMapController controller) {
           _controller.complete(controller);
+          setPolyLines();
         },
+        polylines: _polylines,
         markers: Set<Marker>.of(_markers),
       ),
     );
@@ -62,6 +71,37 @@ class _MapPageState extends State<MapPage> {
     ));
     if (mounted) {
       setState(() {});
+    }
+  }
+
+  void setPolyLines() async {
+    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+        'AIzaSyBeqkn43-p2QqywEtMRu3Aij7q6U6wamV4',
+        PointLatLng(
+            _route.routeStart!.latitude!, _route.routeStart!.longitude!),
+        PointLatLng(_route.routeStop!.latitude!, _route.routeStop!.longitude!));
+    log(result.status.toString());
+    if (result.status == 'OK') {
+      result.points.forEach((PointLatLng point) {
+        _polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+      });
+
+      log(_route.routeStart!.latitude!.toString() +
+          ' ' +
+          _route.routeStart!.longitude!.toString() +
+          ' ' +
+          _route.routeStop!.latitude!.toString() +
+          ' ' +
+          _route.routeStop!.longitude!.toString());
+      log("Polylines");
+      log(_polylineCoordinates.toString());
+      setState(() {
+        _polylines.add(Polyline(
+            width: 10,
+            polylineId: PolylineId('polyLine'),
+            color: Color(0xFF08A5CB),
+            points: _polylineCoordinates));
+      });
     }
   }
 }
