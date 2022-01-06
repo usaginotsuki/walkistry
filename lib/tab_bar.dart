@@ -36,14 +36,14 @@ class _HomeTabBarState extends State<HomeTabBar> {
               },
               childCount: 1,
             ),
-            itemExtent: 450,
+            itemExtent: 370,
           ),
           const SliverAppBar(
-            toolbarHeight: 15,
+            toolbarHeight: 70,
             expandedHeight: 0,
-            floating: false,
+            floating: true,
             pinned: true,
-            backgroundColor: Colors.red,
+            backgroundColor: Colors.black,
             flexibleSpace: TabBar(
               tabs: [
                 Tab(

@@ -6,6 +6,7 @@ import 'package:walkistry_flutter/src/pages/general_settings_page.dart';
 import 'package:walkistry_flutter/src/pages/user_stats/bicycle_stats_page.dart';
 import 'package:walkistry_flutter/src/pages/user_stats/walks_stats_page.dart';
 import 'package:walkistry_flutter/src/services/user_service.dart';
+import 'package:flutter/services.dart';
 
 class UserPage extends StatefulWidget {
   UserPage({Key? key}) : super(key: key);
@@ -23,27 +24,68 @@ class _UserPageState extends State<UserPage> {
   void initState() {
     _dowloadUser('6KoU5EzwSlhh3QCZ3QLh');
     super.initState();
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack);
   }
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 450,
+      height: 350,
       child: Scaffold(
           body: _user == null
-              ? const Center(
-                  child: SizedBox.square(
-                      key: Key("200"),
-                      dimension: 300.0,
-                      child: CircularProgressIndicator()),
+              ? Column(
+                  children: [
+                    Container(
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(
+                              color: Colors.grey,
+                              width: 1,
+                            ),
+                          ),
+                          image: DecorationImage(
+                            image: NetworkImage(
+                                'https://img.freepik.com/free-vector/hand-painted-watercolor-pastel-sky-background_23-2148902771.jpg?size=626&ext=jpg&ga=GA1.2.1210289799.1638662400'),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        child: SizedBox(
+                          height: 200,
+                          child: Container(
+                            alignment: const Alignment(0.0, 2.5),
+                            child: CircleAvatar(
+                              backgroundImage: NetworkImage(
+                                  'https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/1024px-User-avatar.svg.png'),
+                              radius: 60.0,
+                            ),
+                          ),
+                        )),
+                    const SizedBox(
+                      height: 60,
+                    ),
+                    Center(
+                      child: Text("\nBuscando datos de usuario",
+                          style: const TextStyle(
+                              fontSize: 25.0,
+                              color: Colors.black,
+                              letterSpacing: 2.0,
+                              fontWeight: FontWeight.w600)),
+                    ),
+                  ],
                 )
               : _user.toString().isEmpty
                   ? const Center(
                       child: Text("No cuenta con un perfil"),
                     )
-                  : ListView(children: [
+                  : Column(children: [
                       Container(
                           decoration: BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(
+                                color: Colors.grey,
+                                width: 1,
+                              ),
+                            ),
                             image: DecorationImage(
                               image: NetworkImage(_user!.background ??
                                   'https://img.freepik.com/free-vector/hand-painted-watercolor-pastel-sky-background_23-2148902771.jpg?size=626&ext=jpg&ga=GA1.2.1210289799.1638662400'),

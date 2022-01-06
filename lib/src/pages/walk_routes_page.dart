@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage> {
                 ? const Center(
                     child: Text("No hay elementos"),
                   )
-                : ListView(
+                : Column(
                     children: _routes!
                         .map((e) => ElementWidget(element: e))
                         .toList()),

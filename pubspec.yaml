@@ -45,6 +45,7 @@ dependencies:
   geolocator: ^8.0.1
   provider: ^6.0.1
   sliverbar_with_card: ^0.1.5
+  location: ^4.3.0
 
 dev_dependencies:
   flutter_test:

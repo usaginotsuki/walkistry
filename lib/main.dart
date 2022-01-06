@@ -34,6 +34,7 @@ class MyApp extends StatelessWidget {
 
           if (snapshot.hasData) {
             return MaterialApp(
+                debugShowCheckedModeBanner: false,
                 title: 'Material App',
                 home: HomeTabBar(),
                 theme: AppTheme.themeData(mainProvider.mode));
