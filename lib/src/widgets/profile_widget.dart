@@ -36,14 +36,18 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                   )
                 : Card(
                     child: Container(
+                        child: FloatingActionButton(
+                          child: const Icon(Icons.add),
+                          onPressed: () {},
+                        ),
                         decoration: BoxDecoration(
                             gradient: LinearGradient(
                                 begin: Alignment.topCenter,
                                 end: Alignment.bottomCenter,
                                 colors: [
-                          Colors.deepOrange,
-                          Colors.pinkAccent
-                        ]))),
+                              Colors.deepOrange,
+                              Colors.pinkAccent
+                            ]))),
                   ));
   }
 

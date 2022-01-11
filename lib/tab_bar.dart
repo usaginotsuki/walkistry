@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:walkistry_flutter/src/models/user_model.dart';
 import 'package:walkistry_flutter/src/pages/bike_routes_page.dart';
+import 'package:walkistry_flutter/src/pages/config_menu_page.dart';
 import 'package:walkistry_flutter/src/pages/walk_routes_page.dart';
 import 'package:walkistry_flutter/src/pages/profile_page.dart';
 import 'package:walkistry_flutter/src/providers/main_provider.dart';
@@ -38,21 +39,21 @@ class _HomeTabBarState extends State<HomeTabBar> {
             ),
             itemExtent: 370,
           ),
-          SliverAppBar(
-            leading: Switch(
+          const SliverAppBar(
+            /*leading: Switch(
                 value: mainProvider.mode,
                 onChanged: (value) async {
                   mainProvider.mode = value;
                   SharedPreferences prefs =
                       await SharedPreferences.getInstance();
                   prefs.setBool('mode', value);
-                }),
+                }),*/
             toolbarHeight: 70,
             expandedHeight: 0,
             floating: true,
             pinned: true,
             backgroundColor: Colors.black,
-            flexibleSpace: TabBar(
+            flexibleSpace: const TabBar(
               tabs: [
                 Tab(
                   text: 'Caminar',
@@ -66,7 +67,7 @@ class _HomeTabBarState extends State<HomeTabBar> {
                   icon: Icon(Icons.group),
                   text: 'Grupos',
                 ),
-                Tab(icon: Icon(Icons.person), text: 'Perfil'),
+                Tab(icon: Icon(Icons.settings), text: 'Configuraciones'),
               ],
             ),
           ),
@@ -78,7 +79,7 @@ class _HomeTabBarState extends State<HomeTabBar> {
                 const Center(
                   child: Text('Search'),
                 ),
-                UserPage()
+                ConfigPage()
               ],
             ),
           ),

@@ -7,6 +7,7 @@ import 'package:walkistry_flutter/src/pages/user_stats/bicycle_stats_page.dart';
 import 'package:walkistry_flutter/src/pages/user_stats/walks_stats_page.dart';
 import 'package:walkistry_flutter/src/services/user_service.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 class UserPage extends StatefulWidget {
   UserPage({Key? key}) : super(key: key);
@@ -32,9 +33,82 @@ class _UserPageState extends State<UserPage> {
     return SizedBox(
       height: 350,
       child: Scaffold(
-          body: _user == null
-              ? Column(
-                  children: [
+        floatingActionButton: SpeedDial(
+          animatedIcon: AnimatedIcons.menu_home,
+          animatedIconTheme: IconThemeData(size: 22.0),
+          direction: SpeedDialDirection.down,
+          visible: true,
+          curve: Curves.bounceIn,
+          children: [
+            SpeedDialChild(
+              child: Icon(Icons.settings),
+              backgroundColor: Colors.blue,
+              label: 'Settings',
+              labelStyle: TextStyle(fontSize: 18.0),
+              onTap: () {},
+            ),
+            SpeedDialChild(
+              child: Icon(Icons.directions_bike),
+              backgroundColor: Colors.blue,
+              label: 'Bicycle Stats',
+              labelStyle: TextStyle(fontSize: 18.0),
+              onTap: () {},
+            ),
+            SpeedDialChild(
+              child: Icon(Icons.directions_walk),
+              backgroundColor: Colors.blue,
+              label: 'Walks Stats',
+              labelStyle: TextStyle(fontSize: 18.0),
+              onTap: () {},
+            ),
+          ],
+        ),
+        body: _user == null
+            ? Column(
+                children: [
+                  Container(
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(
+                            color: Colors.grey,
+                            width: 1,
+                          ),
+                        ),
+                        image: DecorationImage(
+                          image: NetworkImage(
+                              'https://img.freepik.com/free-vector/hand-painted-watercolor-pastel-sky-background_23-2148902771.jpg?size=626&ext=jpg&ga=GA1.2.1210289799.1638662400'),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      child: SizedBox(
+                        height: 200,
+                        child: Container(
+                          alignment: const Alignment(0.0, 2.5),
+                          child: CircleAvatar(
+                            backgroundImage: NetworkImage(
+                                'https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/1024px-User-avatar.svg.png'),
+                            radius: 60.0,
+                          ),
+                        ),
+                      )),
+                  const SizedBox(
+                    height: 60,
+                  ),
+                  Center(
+                    child: Text("\nBuscando datos de usuario",
+                        style: const TextStyle(
+                            fontSize: 25.0,
+                            color: Colors.black,
+                            letterSpacing: 2.0,
+                            fontWeight: FontWeight.w600)),
+                  ),
+                ],
+              )
+            : _user.toString().isEmpty
+                ? const Center(
+                    child: Text("No cuenta con un perfil"),
+                  )
+                : Column(children: [
                     Container(
                         decoration: BoxDecoration(
                           border: Border(
@@ -44,7 +118,7 @@ class _UserPageState extends State<UserPage> {
                             ),
                           ),
                           image: DecorationImage(
-                            image: NetworkImage(
+                            image: NetworkImage(_user!.background ??
                                 'https://img.freepik.com/free-vector/hand-painted-watercolor-pastel-sky-background_23-2148902771.jpg?size=626&ext=jpg&ga=GA1.2.1210289799.1638662400'),
                             fit: BoxFit.cover,
                           ),
@@ -54,230 +128,45 @@ class _UserPageState extends State<UserPage> {
                           child: Container(
                             alignment: const Alignment(0.0, 2.5),
                             child: CircleAvatar(
-                              backgroundImage: NetworkImage(
+                              backgroundImage: NetworkImage(_user!.avatar ??
                                   'https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/1024px-User-avatar.svg.png'),
                               radius: 60.0,
                             ),
                           ),
                         )),
-                    const SizedBox(
+                    SizedBox(
                       height: 60,
                     ),
                     Center(
-                      child: Text("\nBuscando datos de usuario",
+                      child: Text("\n" + _user!.name!,
                           style: const TextStyle(
                               fontSize: 25.0,
                               color: Colors.black,
                               letterSpacing: 2.0,
                               fontWeight: FontWeight.w600)),
                     ),
-                  ],
-                )
-              : _user.toString().isEmpty
-                  ? const Center(
-                      child: Text("No cuenta con un perfil"),
-                    )
-                  : Column(children: [
-                      Container(
-                          decoration: BoxDecoration(
-                            border: Border(
-                              bottom: BorderSide(
-                                color: Colors.grey,
-                                width: 1,
-                              ),
-                            ),
-                            image: DecorationImage(
-                              image: NetworkImage(_user!.background ??
-                                  'https://img.freepik.com/free-vector/hand-painted-watercolor-pastel-sky-background_23-2148902771.jpg?size=626&ext=jpg&ga=GA1.2.1210289799.1638662400'),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          child: SizedBox(
-                            height: 200,
-                            child: Container(
-                              alignment: const Alignment(0.0, 2.5),
-                              child: CircleAvatar(
-                                backgroundImage: NetworkImage(_user!.avatar ??
-                                    'https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/1024px-User-avatar.svg.png'),
-                                radius: 60.0,
-                              ),
-                            ),
-                          )),
-                      const SizedBox(
-                        height: 60,
+                    Center(
+                      child: Text(
+                        "Peso : " +
+                            _user!.weight.toString() +
+                            " Kg - " +
+                            "\t" +
+                            "Altura : " +
+                            _user!.height.toString() +
+                            " cm\n Fecha de nacimiento : " +
+                            _user!.dateOfBirth!.seconds!.year.toString() +
+                            " / " +
+                            _user!.dateOfBirth!.seconds!.month.toString(),
+                        style: const TextStyle(
+                            fontSize: 15.0,
+                            color: Colors.black,
+                            letterSpacing: 2.0,
+                            fontWeight: FontWeight.w300),
                       ),
-                      Center(
-                        child: Text("\n" + _user!.name!,
-                            style: const TextStyle(
-                                fontSize: 25.0,
-                                color: Colors.black,
-                                letterSpacing: 2.0,
-                                fontWeight: FontWeight.w600)),
-                      ),
-                      Center(
-                        child: Text(
-                          "Peso : " +
-                              _user!.weight.toString() +
-                              " Kg - " +
-                              "\t" +
-                              "Altura : " +
-                              _user!.height.toString() +
-                              " cm\n Fecha de nacimiento : " +
-                              _user!.dateOfBirth!.seconds!.year.toString() +
-                              " / " +
-                              _user!.dateOfBirth!.seconds!.month.toString(),
-                          style: const TextStyle(
-                              fontSize: 15.0,
-                              color: Colors.black,
-                              letterSpacing: 2.0,
-                              fontWeight: FontWeight.w300),
-                        ),
-                      ),
-                      /*const SizedBox(
-                          height: 10,
-                        ),*/
-                      /* GridView.count(
-                          crossAxisCount: 2,
-                          physics:
-                              const NeverScrollableScrollPhysics(), // to disable GridView's scrolling
-                          shrinkWrap: true, // You won't see infinite size error
-
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => WalkStatsPage()));
-                              },
-                              child: Card(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15.0),
-                                ),
-                                margin: const EdgeInsets.all(15),
-                                elevation: 10,
-                                child: Column(
-                                  children: [
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(15.0),
-                                      child: Image.network(
-                                        "https://images.squarespace-cdn.com/content/v1/59402b922e69cfd68984f575/1561395329336-70ZVUDE8HP458RNXR8I0/44875714_S_Feet_Shoe_Sneakers_Walking_Road.jpg",
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                    Container(
-                                        padding: const EdgeInsets.all(10),
-                                        child: const Text(
-                                          "Caminatas",
-                                          textScaleFactor: 1.5,
-                                        ))
-                                  ],
-                                ),
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => BikeStatsPage()));
-                              },
-                              child: Card(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15.0),
-                                ),
-                                margin: const EdgeInsets.all(15),
-                                elevation: 10,
-                                child: Column(
-                                  children: [
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(15.0),
-                                      child: Image.network(
-                                        "https://st.depositphotos.com/1011382/2840/i/600/depositphotos_28403577-stock-photo-moutain-bike-man.jpg",
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                    Container(
-                                        padding: const EdgeInsets.all(10),
-                                        child: const Text(
-                                          "Bicicleta",
-                                          textScaleFactor: 1.5,
-                                        ))
-                                  ],
-                                ),
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => BikeStatsPage()));
-                              },
-                              child: Card(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15.0),
-                                ),
-                                margin: const EdgeInsets.all(15),
-                                elevation: 10,
-                                child: Column(
-                                  children: [
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(15.0),
-                                      child: Image.network(
-                                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlijGC2YdXHHsF3gBszHr0Fw2zV4ThaPHX5vfnt_oXCJp-DNeZgN6xDkpvt2O3lvPOrgI&usqp=CAU",
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                    Container(
-                                        padding: const EdgeInsets.all(10),
-                                        child: const Text(
-                                          "Estadisticas",
-                                          textScaleFactor: 1.5,
-                                        ))
-                                  ],
-                                ),
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const GeneralSettingsPage()));
-                              },
-                              child: Card(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15.0),
-                                ),
-                                margin: const EdgeInsets.all(15),
-                                elevation: 10,
-                                child: Column(
-                                  children: [
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(15.0),
-                                      child: Image.network(
-                                        "https://www.vhv.rs/dpng/d/563-5639120_transparent-setting-clipart-settings-button-transparent-background-hd.png",
-                                        fit: BoxFit.fitHeight,
-                                        height: 110,
-                                      ),
-                                    ),
-                                    Container(
-                                        padding: const EdgeInsets.all(10),
-                                        child: const Text(
-                                          "Configuración de la app",
-                                          textScaleFactor: 1,
-                                          textAlign: TextAlign.center,
-                                        ))
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],*/
-                    ])),
+                    ),
+                  ]),
+        floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
+      ),
     );
   }
 
