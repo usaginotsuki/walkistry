@@ -273,9 +273,11 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
     XFile? pickedFile = await _picker.pickImage(source: source);
     if (pickedFile != null) {
       _image = File(pickedFile.path);
+      _user!.avatar = await _updateService.uploadImage(_image!);
     } else {
       _image = null;
     }
+
     if (mounted) {
       setState(() {});
     }
@@ -285,6 +287,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
     XFile? pickedFile = await _picker.pickImage(source: source);
     if (pickedFile != null) {
       _image_back = File(pickedFile.path);
+      _user!.background = await _updateService.uploadImage(_image_back!);
     } else {
       _image_back = null;
     }
@@ -309,12 +312,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
     if (mounted) {
       setState(() {});
     }
-    _user!.avatar = await _updateService.uploadImage(_image!);
-    _user!.background = await _updateService.uploadImage(_image_back!);
-    print(_user!);
-    print(_user!.dateOfBirth!.seconds);
     String status =
         await _updateService.postUser(_user!, '6KoU5EzwSlhh3QCZ3QLh');
-    print(status);
   }
 }
