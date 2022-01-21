@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:walkistry_flutter/src/models/user_model.dart';
 import 'package:walkistry_flutter/src/pages/general_settings_page.dart';
 import 'package:walkistry_flutter/src/pages/user_stats/bicycle_stats_page.dart';
+import 'package:walkistry_flutter/src/pages/user_stats/profile_edit_page.dart';
 import 'package:walkistry_flutter/src/pages/user_stats/walks_stats_page.dart';
 import 'package:walkistry_flutter/src/services/user_service.dart';
 import 'package:flutter/services.dart';
@@ -33,35 +34,53 @@ class _UserPageState extends State<UserPage> {
     return SizedBox(
       height: 350,
       child: Scaffold(
-        floatingActionButton: SpeedDial(
-          animatedIcon: AnimatedIcons.menu_home,
-          animatedIconTheme: IconThemeData(size: 22.0),
-          direction: SpeedDialDirection.down,
-          visible: true,
-          curve: Curves.bounceIn,
-          children: [
-            SpeedDialChild(
-              child: Icon(Icons.settings),
-              backgroundColor: Colors.blue,
-              label: 'Settings',
-              labelStyle: TextStyle(fontSize: 18.0),
-              onTap: () {},
-            ),
-            SpeedDialChild(
-              child: Icon(Icons.directions_bike),
-              backgroundColor: Colors.blue,
-              label: 'Bicycle Stats',
-              labelStyle: TextStyle(fontSize: 18.0),
-              onTap: () {},
-            ),
-            SpeedDialChild(
-              child: Icon(Icons.directions_walk),
-              backgroundColor: Colors.blue,
-              label: 'Walks Stats',
-              labelStyle: TextStyle(fontSize: 18.0),
-              onTap: () {},
-            ),
-          ],
+        floatingActionButton: Padding(
+          padding: const EdgeInsets.only(top: 10.0),
+          child: SpeedDial(
+            animatedIcon: AnimatedIcons.menu_home,
+            animatedIconTheme: IconThemeData(size: 22.0),
+            direction: SpeedDialDirection.down,
+            visible: true,
+            curve: Curves.bounceIn,
+            children: [
+              SpeedDialChild(
+                child: Icon(Icons.perm_identity),
+                backgroundColor: Colors.blue,
+                label: 'Editar perfil',
+                labelStyle: TextStyle(fontSize: 18.0),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ProfileEditPage()),
+                  );
+                },
+              ),
+              SpeedDialChild(
+                child: Icon(Icons.directions_bike),
+                backgroundColor: Colors.blue,
+                label: 'Estadisticas de bicicleta',
+                labelStyle: TextStyle(fontSize: 18.0),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => BikeStatsPage()),
+                  );
+                },
+              ),
+              SpeedDialChild(
+                child: Icon(Icons.directions_walk),
+                backgroundColor: Colors.blue,
+                label: 'Estadisticas de caminata',
+                labelStyle: TextStyle(fontSize: 18.0),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => WalkStatsPage()),
+                  );
+                },
+              ),
+            ],
+          ),
         ),
         body: _user == null
             ? Column(

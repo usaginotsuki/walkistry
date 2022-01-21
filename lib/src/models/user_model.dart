@@ -66,7 +66,7 @@ class DateOfBirth {
       );
 
   Map<String, dynamic> toJson() => {
-        "_seconds": seconds,
+        "_seconds": seconds!.millisecondsSinceEpoch ~/ 1000,
         "_nanoseconds": nanoseconds,
       };
 }

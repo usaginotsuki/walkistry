@@ -39,15 +39,15 @@ class _HomeTabBarState extends State<HomeTabBar> {
             ),
             itemExtent: 370,
           ),
-          const SliverAppBar(
-            /*leading: Switch(
+          SliverAppBar(
+            leading: Switch(
                 value: mainProvider.mode,
                 onChanged: (value) async {
                   mainProvider.mode = value;
                   SharedPreferences prefs =
                       await SharedPreferences.getInstance();
                   prefs.setBool('mode', value);
-                }),*/
+                }),
             toolbarHeight: 70,
             expandedHeight: 0,
             floating: true,
