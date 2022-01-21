@@ -1,8 +1,10 @@
+// ignore_for_file: unused_local_variable
+
 import 'dart:async';
-import 'dart:convert';
+
 import 'dart:io';
 import 'package:cloudinary_public/cloudinary_public.dart';
-import 'package:flutter/material.dart';
+
 import 'package:http/http.dart' as http;
 import 'package:walkistry_flutter/src/models/user_model.dart';
 import 'dart:developer' as developer;

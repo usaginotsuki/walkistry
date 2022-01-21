@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors, non_constant_identifier_names, avoid_print, unused_local_variable
+
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_holo_date_picker/date_picker.dart';
@@ -7,8 +9,6 @@ import 'package:walkistry_flutter/src/models/user_model.dart';
 import 'package:walkistry_flutter/src/services/photo_service.dart';
 import 'package:walkistry_flutter/src/services/user_service.dart';
 import 'package:walkistry_flutter/src/widgets/image_full_screen.dart';
-import 'package:walkistry_flutter/src/widgets/profile_widget.dart';
-import 'dart:developer' as developer;
 
 import 'package:walkistry_flutter/tab_bar.dart';
 

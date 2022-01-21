@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors, duplicate_ignore
+
 import 'package:flutter/material.dart';
 import 'package:walkistry_flutter/src/models/user_model.dart';
 import 'package:walkistry_flutter/src/services/user_service.dart';
@@ -40,6 +42,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                           child: const Icon(Icons.add),
                           onPressed: () {},
                         ),
+                        // ignore: prefer_const_constructors
                         decoration: BoxDecoration(
                             gradient: LinearGradient(
                                 begin: Alignment.topCenter,
