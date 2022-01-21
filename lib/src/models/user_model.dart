@@ -48,6 +48,8 @@ class User {
         "height": height,
         "name": name,
         "exerciseTarget": exerciseTarget,
+        "avatar": avatar,
+        "background": background,
       };
 }
 

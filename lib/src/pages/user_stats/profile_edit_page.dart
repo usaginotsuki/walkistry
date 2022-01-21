@@ -27,6 +27,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
   final _formKey = GlobalKey<FormState>();
   bool _onSaving = false;
   final UpdateService _updateService = UpdateService();
+  File? _image_back;
 
   @override
   void initState() {
@@ -153,14 +154,16 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                                         actions: [
                                           ElevatedButton.icon(
                                             icon: const Icon(Icons.camera_alt),
-                                            onPressed: () => _selectImage(
-                                                ImageSource.camera),
+                                            onPressed: () =>
+                                                _selectImageBackground(
+                                                    ImageSource.camera),
                                             label: Text("Tomar foto"),
                                           ),
                                           ElevatedButton.icon(
                                             icon: const Icon(Icons.image),
-                                            onPressed: () => _selectImage(
-                                                ImageSource.gallery),
+                                            onPressed: () =>
+                                                _selectImageBackground(
+                                                    ImageSource.gallery),
                                             label:
                                                 Text("Seleccionar de galeria"),
                                           )
@@ -278,6 +281,18 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
     }
   }
 
+  _selectImageBackground(ImageSource source) async {
+    XFile? pickedFile = await _picker.pickImage(source: source);
+    if (pickedFile != null) {
+      _image_back = File(pickedFile.path);
+    } else {
+      _image_back = null;
+    }
+    if (mounted) {
+      setState(() {});
+    }
+  }
+
   _dowloadUser(String id) async {
     _user = (await _userHelper.getUser(id));
     if (mounted) {
@@ -295,6 +310,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
       setState(() {});
     }
     _user!.avatar = await _updateService.uploadImage(_image!);
+    _user!.background = await _updateService.uploadImage(_image_back!);
     print(_user!);
     print(_user!.dateOfBirth!.seconds);
     String status =
