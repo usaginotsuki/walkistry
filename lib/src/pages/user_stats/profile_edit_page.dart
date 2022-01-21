@@ -40,6 +40,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
     return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
+            automaticallyImplyLeading: false,
             backgroundColor: Colors.transparent,
             actions: <Widget>[
               BackButton(
