@@ -1,6 +1,5 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'dart:developer' as developer;
 
 import 'package:walkistry_flutter/src/models/user_model.dart';
 import 'package:walkistry_flutter/src/models/stats/walk_list_model.dart';

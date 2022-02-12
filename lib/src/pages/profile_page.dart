@@ -1,8 +1,7 @@
-// ignore_for_file: prefer_const_constructors_in_immutables
+// ignore_for_file: prefer_const_constructors_in_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
 import 'package:walkistry_flutter/src/models/user_model.dart';
-import 'package:walkistry_flutter/src/pages/general_settings_page.dart';
 import 'package:walkistry_flutter/src/pages/user_stats/bicycle_stats_page.dart';
 import 'package:walkistry_flutter/src/pages/user_stats/profile_edit_page.dart';
 import 'package:walkistry_flutter/src/pages/user_stats/walks_stats_page.dart';

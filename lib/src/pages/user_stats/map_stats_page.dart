@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors_in_immutables, override_on_non_overriding_member
+// ignore_for_file: prefer_const_constructors_in_immutables, override_on_non_overriding_member, prefer_final_fields, prefer_const_constructors, annotate_overrides
 
 import 'dart:async';
 

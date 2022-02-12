@@ -1,6 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:walkistry_flutter/src/pages/general_settings_page.dart';
+import 'package:walkistry_flutter/src/pages/login_page.dart';
+import 'package:walkistry_flutter/src/pages/signup_page.dart';
 import 'package:walkistry_flutter/src/providers/main_provider.dart';
 import 'package:walkistry_flutter/src/themes/app_theme.dart';
 import 'tab_bar.dart';
@@ -36,7 +39,13 @@ class MyApp extends StatelessWidget {
             return MaterialApp(
                 debugShowCheckedModeBanner: false,
                 title: 'Material App',
-                home: HomeTabBar(),
+                routes: {
+                  "/login": (context) => const LoginPage(),
+                  "/settings": (context) => const GeneralSettingsPage(),
+                  "/signup": (context) => const SignUpPage(),
+                },
+                initialRoute: "/login",
+                home: const LoginPage(),
                 theme: AppTheme.themeData(mainProvider.mode));
           }
           return const SizedBox.square(

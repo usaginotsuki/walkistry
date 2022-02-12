@@ -3,13 +3,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:walkistry_flutter/src/models/user_model.dart';
 import 'package:walkistry_flutter/src/pages/bike_routes_page.dart';
 import 'package:walkistry_flutter/src/pages/config_menu_page.dart';
 import 'package:walkistry_flutter/src/pages/walk_routes_page.dart';
 import 'package:walkistry_flutter/src/pages/profile_page.dart';
 import 'package:walkistry_flutter/src/providers/main_provider.dart';
-import 'package:walkistry_flutter/src/widgets/profile_widget.dart';
 
 class HomeTabBar extends StatefulWidget {
   const HomeTabBar({Key? key}) : super(key: key);

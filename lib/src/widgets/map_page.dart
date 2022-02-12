@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_final_fields
+// ignore_for_file: prefer_const_constructors, prefer_final_fields, import_of_legacy_library_into_null_safe
 
 import 'dart:async';
 import 'package:flutter/material.dart';
