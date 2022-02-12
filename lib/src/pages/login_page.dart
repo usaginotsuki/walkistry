@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:provider/provider.dart';
 import 'package:walkistry_flutter/main.dart';
 import 'package:walkistry_flutter/src/bloc/login_bloc.dart';
@@ -6,6 +7,8 @@ import 'package:walkistry_flutter/src/models/login_model.dart';
 import 'package:walkistry_flutter/src/providers/main_provider.dart';
 import 'package:walkistry_flutter/src/services/usuario_service.dart';
 import 'dart:developer' as developer;
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -16,7 +19,12 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool _obscuredText = true;
-
+  GoogleSignIn _googleSignIn = GoogleSignIn(
+    scopes: [
+      'email',
+      'https://www.googleapis.com/auth/contacts.readonly',
+    ],
+  );
   LoginBloc _loginBloc = LoginBloc();
   @override
   Widget build(BuildContext context) {
@@ -152,15 +160,24 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
                         ),
-                        Center(
-                            child: Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 10, bottom: 10),
-                                child: TextButton(
-                                    onPressed: () {
-                                      Navigator.pushNamed(context, '/signup');
-                                    },
-                                    child: const Text("Registrarse"))))
+                        Column(
+                          children: [
+                            Center(
+                                child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 10, bottom: 10),
+                                    child: TextButton(
+                                        onPressed: () {
+                                          Navigator.pushNamed(
+                                              context, '/signup');
+                                        },
+                                        child: const Text("Registrarse")))),
+                            SignInButton(Buttons.Google,
+                                text: "Sign up with Google", onPressed: () {
+                              _handleSignIn();
+                            })
+                          ],
+                        )
                       ],
                     ),
                   ),
@@ -171,5 +188,22 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  Future<UserCredential> _handleSignIn() async {
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+    // Obtain the auth details from the request
+    final GoogleSignInAuthentication? googleAuth =
+        await googleUser?.authentication;
+
+    // Create a new credential
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+    developer.log("Credential: $credential", name: "Login");
+    // Once signed in, return the UserCredential
+    return await FirebaseAuth.instance.signInWithCredential(credential);
   }
 }

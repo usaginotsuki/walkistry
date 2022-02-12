@@ -4,11 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:walkistry_flutter/src/pages/general_settings_page.dart';
 import 'package:walkistry_flutter/src/pages/login_page.dart';
 import 'package:walkistry_flutter/src/pages/signup_page.dart';
-import 'package:walkistry_flutter/src/pages/walk_routes_page.dart';
 import 'package:walkistry_flutter/src/providers/main_provider.dart';
 import 'package:walkistry_flutter/src/themes/app_theme.dart';
 import 'tab_bar.dart';
 import 'package:provider/provider.dart';
+
+
 
 void main() => runApp(MultiProvider(
         providers: [
