@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:walkistry_flutter/main.dart';
 import 'package:walkistry_flutter/src/bloc/login_bloc.dart';
+import 'package:walkistry_flutter/src/models/login_model.dart';
+import 'package:walkistry_flutter/src/providers/main_provider.dart';
+import 'package:walkistry_flutter/src/services/usuario_service.dart';
+import 'dart:developer' as developer;
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -10,9 +16,11 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool _obscuredText = true;
+
   LoginBloc _loginBloc = LoginBloc();
   @override
   Widget build(BuildContext context) {
+    final mainProvider = Provider.of<MainProvider>(context);
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
@@ -111,7 +119,31 @@ class _LoginPageState extends State<LoginPage> {
                                               const EdgeInsets.only(top: 40),
                                           child: ElevatedButton.icon(
                                               onPressed: snapshot.hasData
-                                                  ? () {}
+                                                  ? () async {
+                                                      final login =
+                                                          UsuarioService();
+                                                      final creds = UserLogin(
+                                                          email:
+                                                              _loginBloc.email,
+                                                          password: _loginBloc
+                                                              .password);
+                                                      Map<String, dynamic>
+                                                          resp = await login
+                                                              .login(creds);
+                                                      if (resp.containsKey(
+                                                          'idToken')) {
+                                                        final userName =
+                                                            resp['displayName'];
+                                                        developer.log(
+                                                            "Usuario logeado $userName",
+                                                            name: "Login");
+                                                        mainProvider.token =
+                                                            resp['idToken'];
+                                                        developer.log(
+                                                            mainProvider.token,
+                                                            name: "Token");
+                                                      }
+                                                    }
                                                   : null,
                                               icon: const Icon(Icons.login),
                                               label: const Text("Ingresar")));
