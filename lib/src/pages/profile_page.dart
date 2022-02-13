@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:walkistry_flutter/src/models/user_model.dart';
+import 'package:walkistry_flutter/src/pages/login_page.dart';
 import 'package:walkistry_flutter/src/pages/user_stats/bicycle_stats_page.dart';
 import 'package:walkistry_flutter/src/pages/user_stats/profile_edit_page.dart';
 import 'package:walkistry_flutter/src/pages/user_stats/walks_stats_page.dart';
@@ -88,8 +89,10 @@ class _UserPageState extends State<UserPage> {
                 labelStyle: TextStyle(fontSize: 18.0),
                 onTap: () {
                   mainProvider.logout();
-
-                  setState(() {});
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginPage()),
+                  );
                 },
               ),
             ],
