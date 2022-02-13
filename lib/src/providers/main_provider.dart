@@ -37,4 +37,9 @@ class MainProvider extends ChangeNotifier {
       return false;
     }
   }
+
+  logout() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove("token");
+  }
 }

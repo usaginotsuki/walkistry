@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:provider/provider.dart';
@@ -191,6 +192,9 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<UserCredential> _handleSignIn() async {
+    MainProvider mainProvider =
+        Provider.of<MainProvider>(context, listen: false);
+    await Firebase.initializeApp();
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
     // Obtain the auth details from the request
@@ -204,6 +208,10 @@ class _LoginPageState extends State<LoginPage> {
     );
     developer.log("Credential: $credential", name: "Login");
     // Once signed in, return the UserCredential
-    return await FirebaseAuth.instance.signInWithCredential(credential);
+    var answer = await FirebaseAuth.instance.signInWithCredential(credential);
+    developer.log("Answer: $answer", name: "Login");
+
+    mainProvider.token = answer.user!.uid;
+    return answer;
   }
 }

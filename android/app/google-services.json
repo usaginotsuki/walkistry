@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1031981180165",
+    "project_id": "walkistry",
+    "storage_bucket": "walkistry.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1031981180165:android:9940c1b0ebfcb5669e836c",
+        "android_client_info": {
+          "package_name": "com.example.walkistry_flutter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1031981180165-7jsqnv7tcn51e96nf0q1h19mt7dhtfvr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.walkistry_flutter",
+            "certificate_hash": "9311f94af02aa2e8c0345fe681c172fc322dbadd"
+          }
+        },
+        {
+          "client_id": "1031981180165-m4n0pmn3n6tjlm8u0mt8bblhc4tdlh6h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC9_d_c51n3hQKvxF5KLjpRKHO-xMnsBwI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1031981180165-m4n0pmn3n6tjlm8u0mt8bblhc4tdlh6h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

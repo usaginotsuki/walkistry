@@ -1,10 +1,12 @@
 // ignore_for_file: prefer_const_constructors_in_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:walkistry_flutter/src/models/user_model.dart';
 import 'package:walkistry_flutter/src/pages/user_stats/bicycle_stats_page.dart';
 import 'package:walkistry_flutter/src/pages/user_stats/profile_edit_page.dart';
 import 'package:walkistry_flutter/src/pages/user_stats/walks_stats_page.dart';
+import 'package:walkistry_flutter/src/providers/main_provider.dart';
 import 'package:walkistry_flutter/src/services/user_service.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
@@ -30,6 +32,7 @@ class _UserPageState extends State<UserPage> {
 
   @override
   Widget build(BuildContext context) {
+    final mainProvider = Provider.of<MainProvider>(context);
     return SizedBox(
       height: 350,
       child: Scaffold(
@@ -76,6 +79,17 @@ class _UserPageState extends State<UserPage> {
                     context,
                     MaterialPageRoute(builder: (context) => WalkStatsPage()),
                   );
+                },
+              ),
+              SpeedDialChild(
+                child: Icon(Icons.close),
+                backgroundColor: Colors.blue,
+                label: 'Cerrar sesión',
+                labelStyle: TextStyle(fontSize: 18.0),
+                onTap: () {
+                  mainProvider.logout();
+
+                  setState(() {});
                 },
               ),
             ],

@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:walkistry_flutter/src/pages/general_settings_page.dart';
 import 'package:walkistry_flutter/src/pages/login_page.dart';
@@ -9,7 +10,7 @@ import 'package:walkistry_flutter/src/themes/app_theme.dart';
 import 'tab_bar.dart';
 import 'package:provider/provider.dart';
 
-
+FirebaseApp defaultApp = Firebase.app();
 
 void main() => runApp(MultiProvider(
         providers: [
