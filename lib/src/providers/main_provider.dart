@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:developer' as developer;
 
 class MainProvider extends ChangeNotifier {
   bool _mode = true;
@@ -40,6 +41,9 @@ class MainProvider extends ChangeNotifier {
 
   logout() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+
     prefs.remove("token");
+    developer.log(prefs.getString("token").toString());
+    notifyListeners();
   }
 }

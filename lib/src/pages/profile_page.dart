@@ -89,10 +89,6 @@ class _UserPageState extends State<UserPage> {
                 labelStyle: TextStyle(fontSize: 18.0),
                 onTap: () {
                   mainProvider.logout();
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => LoginPage()),
-                  );
                 },
               ),
             ],

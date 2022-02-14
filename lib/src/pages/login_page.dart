@@ -2,7 +2,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:provider/provider.dart';
-import 'package:walkistry_flutter/main.dart';
 import 'package:walkistry_flutter/src/bloc/login_bloc.dart';
 import 'package:walkistry_flutter/src/models/login_model.dart';
 import 'package:walkistry_flutter/src/providers/main_provider.dart';
@@ -26,8 +25,9 @@ class _LoginPageState extends State<LoginPage> {
       'https://www.googleapis.com/auth/contacts.readonly',
     ],
   );
-  LoginBloc _loginBloc = LoginBloc();
+
   @override
+  LoginBloc _loginBloc = LoginBloc();
   Widget build(BuildContext context) {
     final mainProvider = Provider.of<MainProvider>(context);
     return SafeArea(
@@ -41,7 +41,8 @@ class _LoginPageState extends State<LoginPage> {
               Column(
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(top: 120, left: 35, right: 35),
+                    padding:
+                        const EdgeInsets.only(top: 120, left: 35, right: 35),
                     child: Column(
                       children: [
                         const Padding(
@@ -129,6 +130,12 @@ class _LoginPageState extends State<LoginPage> {
                                           child: ElevatedButton.icon(
                                               onPressed: snapshot.hasData
                                                   ? () async {
+                                                      developer.log(_loginBloc
+                                                              .email
+                                                              .toString() +
+                                                          " " +
+                                                          _loginBloc.password
+                                                              .toString());
                                                       final login =
                                                           UsuarioService();
                                                       final creds = UserLogin(
@@ -167,16 +174,46 @@ class _LoginPageState extends State<LoginPage> {
                                 child: Padding(
                                     padding: const EdgeInsets.only(
                                         top: 10, bottom: 10),
-                                    child: TextButton(
-                                        onPressed: () {
-                                          Navigator.pushNamed(
-                                              context, '/signup');
-                                        },
-                                        child: const Text("Registrarse")))),
-                            SignInButton(Buttons.Google,
-                                text: "Sign up with Google", onPressed: () {
-                              _handleSignIn();
-                            })
+                                    child: SignInButton(
+                                      Buttons.Email,
+                                      onPressed: () {
+                                        Navigator.pushNamed(context, '/signup');
+                                      },
+                                    ))),
+                            StreamBuilder<void>(
+                                stream: null,
+                                builder: (context, snapshot) {
+                                  return SignInButton(Buttons.Google,
+                                      text: "Ingresar con Google",
+                                      onPressed: () async {
+                                    await Firebase.initializeApp();
+                                    final GoogleSignInAccount? googleUser =
+                                        await GoogleSignIn().signIn();
+
+                                    // Obtain the auth details from the request
+                                    final GoogleSignInAuthentication?
+                                        googleAuth =
+                                        await googleUser?.authentication;
+
+                                    // Create a new credential
+                                    final credential =
+                                        GoogleAuthProvider.credential(
+                                      accessToken: googleAuth?.accessToken,
+                                      idToken: googleAuth?.idToken,
+                                    );
+                                    developer.log("Credential: $credential",
+                                        name: "Login");
+                                    // Once signed in, return the UserCredential
+                                    var answer = await FirebaseAuth.instance
+                                        .signInWithCredential(credential);
+                                    developer.log("Answer: $answer",
+                                        name: "Login");
+
+                                    mainProvider.token = answer.user!.uid;
+                                    developer
+                                        .log(mainProvider.token.toString());
+                                  });
+                                })
                           ],
                         )
                       ],
@@ -189,29 +226,5 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
-  }
-
-  Future<UserCredential> _handleSignIn() async {
-    MainProvider mainProvider =
-        Provider.of<MainProvider>(context, listen: false);
-    await Firebase.initializeApp();
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-
-    // Obtain the auth details from the request
-    final GoogleSignInAuthentication? googleAuth =
-        await googleUser?.authentication;
-
-    // Create a new credential
-    final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth?.accessToken,
-      idToken: googleAuth?.idToken,
-    );
-    developer.log("Credential: $credential", name: "Login");
-    // Once signed in, return the UserCredential
-    var answer = await FirebaseAuth.instance.signInWithCredential(credential);
-    developer.log("Answer: $answer", name: "Login");
-
-    mainProvider.token = answer.user!.uid;
-    return answer;
   }
 }
