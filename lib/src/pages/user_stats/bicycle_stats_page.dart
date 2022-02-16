@@ -1,7 +1,9 @@
 // ignore_for_file: prefer_const_constructors_in_immutables
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:walkistry_flutter/src/models/stats/walk_list_model.dart';
+import 'package:walkistry_flutter/src/providers/main_provider.dart';
 import 'package:walkistry_flutter/src/services/user_service.dart';
 import 'package:walkistry_flutter/src/widgets/walk_list_widget.dart';
 
@@ -19,7 +21,12 @@ class _BikeStatsPageState extends State<BikeStatsPage> {
 
   @override
   void initState() {
-    _dowloadWalks('6KoU5EzwSlhh3QCZ3QLh');
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      MainProvider mainProvider =
+          Provider.of<MainProvider>(context, listen: false);
+
+      _dowloadWalks(mainProvider.userId.toString());
+    });
     super.initState();
   }
 

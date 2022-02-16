@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_holo_date_picker/date_picker.dart';
 import 'package:flutter_holo_date_picker/widget/date_picker_widget.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 import 'package:walkistry_flutter/src/models/user_model.dart';
+import 'package:walkistry_flutter/src/providers/main_provider.dart';
 import 'package:walkistry_flutter/src/services/photo_service.dart';
 import 'package:walkistry_flutter/src/services/user_service.dart';
 import 'package:walkistry_flutter/src/widgets/image_full_screen.dart';
@@ -31,12 +33,19 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
 
   @override
   void initState() {
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      MainProvider mainProvider =
+          Provider.of<MainProvider>(context, listen: false);
+
+      _dowloadUser(mainProvider.userId.toString());
+    });
     super.initState();
-    _dowloadUser('6KoU5EzwSlhh3QCZ3QLh');
   }
 
   @override
   Widget build(BuildContext context) {
+    MainProvider mainProvider =
+        Provider.of<MainProvider>(context, listen: true);
     return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
@@ -52,7 +61,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
               ),
               IconButton(
                 onPressed: () {
-                  _sendForm('6KoU5EzwSlhh3QCZ3QLh');
+                  _sendForm(mainProvider.userId.toString());
                 },
                 icon: _onSaving ? Icon(Icons.check) : Icon(Icons.save),
                 color: Colors.black,
@@ -305,6 +314,8 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
   }
 
   _sendForm(String id) async {
+    MainProvider mainProvider =
+        Provider.of<MainProvider>(context, listen: false);
     if (!_formKey.currentState!.validate()) {
       return;
     }
@@ -314,6 +325,6 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
       setState(() {});
     }
     String status =
-        await _updateService.postUser(_user!, '6KoU5EzwSlhh3QCZ3QLh');
+        await _updateService.postUser(_user!, mainProvider.userId.toString());
   }
 }

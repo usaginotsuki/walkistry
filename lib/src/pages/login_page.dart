@@ -67,6 +67,8 @@ class _LoginPageState extends State<LoginPage> {
                                     stream: _loginBloc.emailStream,
                                     builder: (context, snapshot) {
                                       return TextField(
+                                          keyboardType:
+                                              TextInputType.emailAddress,
                                           onChanged: _loginBloc.changeEmail,
                                           decoration: InputDecoration(
                                             errorText:
@@ -91,6 +93,8 @@ class _LoginPageState extends State<LoginPage> {
                                       return TextField(
                                           onChanged: _loginBloc.changePassword,
                                           obscureText: _obscuredText,
+                                          keyboardType:
+                                              TextInputType.visiblePassword,
                                           decoration: InputDecoration(
                                             errorText:
                                                 snapshot.error?.toString(),
@@ -155,9 +159,14 @@ class _LoginPageState extends State<LoginPage> {
                                                             name: "Login");
                                                         mainProvider.token =
                                                             resp['idToken'];
+                                                        mainProvider.userId =
+                                                            resp['localId'];
                                                         developer.log(
                                                             mainProvider.token,
                                                             name: "Token");
+                                                        developer.log(
+                                                            mainProvider.userId,
+                                                            name: "UserID");
                                                       }
                                                     }
                                                   : null,
@@ -176,6 +185,7 @@ class _LoginPageState extends State<LoginPage> {
                                         top: 10, bottom: 10),
                                     child: SignInButton(
                                       Buttons.Email,
+                                      text: "Registrarse con correo",
                                       onPressed: () {
                                         Navigator.pushNamed(context, '/signup');
                                       },
@@ -203,15 +213,23 @@ class _LoginPageState extends State<LoginPage> {
                                     );
                                     developer.log("Credential: $credential",
                                         name: "Login");
+
                                     // Once signed in, return the UserCredential
                                     var answer = await FirebaseAuth.instance
                                         .signInWithCredential(credential);
                                     developer.log("Answer: $answer",
                                         name: "Login");
 
+                                    final login = UsuarioService();
+                                    var userID = answer.user!.uid.toString();
+                                    developer.log(userID,
+                                        name: "UserID - Google");
+                                    await login.googleLogIn(userID);
+                                    mainProvider.userId = userID;
                                     mainProvider.token = answer.user!.uid;
-                                    developer
-                                        .log(mainProvider.token.toString());
+                                    developer.log(
+                                        mainProvider.userId.toString(),
+                                        name: "User-ID - Provider");
                                   });
                                 })
                           ],

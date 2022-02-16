@@ -62,6 +62,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               builder: (context, snapshot) {
                                 return TextField(
                                     onChanged: _loginBloc.changeEmail,
+                                    keyboardType: TextInputType.emailAddress,
                                     decoration: InputDecoration(
                                       errorText: snapshot.error?.toString(),
                                       labelText: "Correo electrónico",
@@ -174,6 +175,11 @@ class _SignUpPageState extends State<SignUpPage> {
                                                           name: "Login");
                                                       mainProvider.token =
                                                           resp['idToken'];
+                                                      mainProvider.userId =
+                                                          resp['localId'];
+                                                      developer.log(
+                                                          mainProvider.userId,
+                                                          name: "UserID");
                                                       developer.log(
                                                           mainProvider.token,
                                                           name: "Token");

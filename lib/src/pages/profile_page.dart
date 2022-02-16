@@ -11,6 +11,7 @@ import 'package:walkistry_flutter/src/providers/main_provider.dart';
 import 'package:walkistry_flutter/src/services/user_service.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'dart:developer' as developer;
 
 class UserPage extends StatefulWidget {
   UserPage({Key? key}) : super(key: key);
@@ -26,7 +27,13 @@ class _UserPageState extends State<UserPage> {
 
   @override
   void initState() {
-    _dowloadUser('6KoU5EzwSlhh3QCZ3QLh');
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      MainProvider mainProvider =
+          Provider.of<MainProvider>(context, listen: true);
+      developer.log(mainProvider.userId, name: "UserPage");
+      _dowloadUser(mainProvider.userId.toString());
+    });
+
     super.initState();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack);
   }
@@ -89,6 +96,24 @@ class _UserPageState extends State<UserPage> {
                 labelStyle: TextStyle(fontSize: 18.0),
                 onTap: () {
                   mainProvider.logout();
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      PageRouteBuilder(pageBuilder: (BuildContext context,
+                          Animation animation, Animation secondaryAnimation) {
+                        return LoginPage();
+                      }, transitionsBuilder: (BuildContext context,
+                          Animation<double> animation,
+                          Animation<double> secondaryAnimation,
+                          Widget child) {
+                        return new SlideTransition(
+                          position: new Tween<Offset>(
+                            begin: const Offset(1.0, 0.0),
+                            end: Offset.zero,
+                          ).animate(animation),
+                          child: child,
+                        );
+                      }),
+                      (Route route) => false);
                 },
               ),
             ],
@@ -203,6 +228,8 @@ class _UserPageState extends State<UserPage> {
 
   _dowloadUser(String id) async {
     _user = (await _userHelper.getUser(id));
+    developer.log(id + "", name: "ID _dowloadUser");
+    developer.log(_user.toString());
     if (mounted) {
       setState(() {});
     }

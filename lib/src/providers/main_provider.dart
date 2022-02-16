@@ -5,12 +5,27 @@ import 'dart:developer' as developer;
 class MainProvider extends ChangeNotifier {
   bool _mode = true;
   String _token = "";
+  String _userId = "";
 
   bool get mode => _mode;
 
   set mode(bool value) {
     _mode = value;
     notifyListeners();
+  }
+
+  String get userId => _userId;
+
+  set userId(String value) {
+    updateUID(value);
+    _userId = value;
+    notifyListeners();
+    developer.log("userId: $value", name: "MainProvider - UID");
+  }
+
+  updateUID(String value) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("userId", value);
   }
 
   String get token {
@@ -42,8 +57,7 @@ class MainProvider extends ChangeNotifier {
   logout() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    prefs.remove("token");
-    developer.log(prefs.getString("token").toString());
+    _updateToken("");
     notifyListeners();
   }
 }

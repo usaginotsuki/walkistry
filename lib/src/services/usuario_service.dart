@@ -57,4 +57,21 @@ class UsuarioService {
       return <String, dynamic>{};
     }
   }
+
+  Future<String> googleLogIn(String userID) async {
+    try {
+      final authData = {
+        'uid': userID,
+      };
+      var url = Uri.parse(_signUpUrl + '/' + 'googleSignin');
+      var bodyEncoded = json.encode(authData);
+      final response = await http.post(url,
+          body: bodyEncoded, headers: {"Content-Type": "application/json"});
+      developer.log(response.body.toString(), name: "GoogleLogIn");
+      return response.body;
+    } catch (e) {
+      developer.log(e.toString(), name: "UsuarioService");
+      return '';
+    }
+  }
 }

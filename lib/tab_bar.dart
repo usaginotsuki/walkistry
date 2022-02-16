@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:walkistry_flutter/src/pages/bike_routes_page.dart';
 import 'package:walkistry_flutter/src/pages/config_menu_page.dart';
+import 'package:walkistry_flutter/src/pages/general_settings_page.dart';
 import 'package:walkistry_flutter/src/pages/walk_routes_page.dart';
 import 'package:walkistry_flutter/src/pages/profile_page.dart';
 import 'package:walkistry_flutter/src/providers/main_provider.dart';
@@ -37,21 +38,13 @@ class _HomeTabBarState extends State<HomeTabBar> {
             ),
             itemExtent: 370,
           ),
-          SliverAppBar(
-            leading: Switch(
-                value: mainProvider.mode,
-                onChanged: (value) async {
-                  mainProvider.mode = value;
-                  SharedPreferences prefs =
-                      await SharedPreferences.getInstance();
-                  prefs.setBool('mode', value);
-                }),
+          const SliverAppBar(
             toolbarHeight: 70,
             expandedHeight: 0,
             floating: true,
             pinned: true,
             backgroundColor: Colors.black,
-            flexibleSpace: const TabBar(
+            flexibleSpace: TabBar(
               tabs: [
                 Tab(
                   text: 'Caminar',
@@ -77,7 +70,7 @@ class _HomeTabBarState extends State<HomeTabBar> {
                 const Center(
                   child: Text('Search'),
                 ),
-                ConfigPage()
+                GeneralSettingsPage()
               ],
             ),
           ),
