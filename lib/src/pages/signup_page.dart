@@ -21,10 +21,9 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     final mainProvider = Provider.of<MainProvider>(context, listen: true);
-    return SafeArea(
-        child: Scaffold(
-            body: SingleChildScrollView(
-                child: Stack(children: [
+    return Scaffold(
+        body: SingleChildScrollView(
+            child: Stack(children: [
       Container(
           height: MediaQuery.of(context).size.height * 0.4, color: Colors.blue),
       Column(
@@ -198,6 +197,6 @@ class _SignUpPageState extends State<SignUpPage> {
               ))
         ],
       )
-    ]))));
+    ])));
   }
 }

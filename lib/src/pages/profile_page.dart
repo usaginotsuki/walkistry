@@ -29,7 +29,7 @@ class _UserPageState extends State<UserPage> {
   void initState() {
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       MainProvider mainProvider =
-          Provider.of<MainProvider>(context, listen: true);
+          Provider.of<MainProvider>(context, listen: false);
       developer.log(mainProvider.userId, name: "UserPage");
       _dowloadUser(mainProvider.userId.toString());
     });
