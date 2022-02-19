@@ -13,6 +13,7 @@ import 'package:walkistry_flutter/src/themes/app_theme.dart';
 import 'tab_bar.dart';
 import 'package:provider/provider.dart';
 import 'dart:developer' as developer;
+import 'firebase_options.dart';
 
 FirebaseApp defaultApp = Firebase.app();
 
@@ -25,7 +26,9 @@ late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
@@ -69,12 +72,45 @@ Future<void> main() async {
 class MyApp extends StatefulWidget {
   const MyApp({Key? key, required this.mode}) : super(key: key);
   final bool? mode;
-
   @override
   State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    super.initState();
+    _getTokenFCM();
+
+    FirebaseMessaging.instance
+        .getInitialMessage()
+        .then((RemoteMessage? message) {});
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      RemoteNotification? notification = message.notification;
+      AndroidNotification? android = message.notification?.android;
+      if (notification != null && android != null && !kIsWeb) {
+        flutterLocalNotificationsPlugin.show(
+          notification.hashCode,
+          notification.title,
+          notification.body,
+          NotificationDetails(
+            android: AndroidNotificationDetails(
+              channel.id,
+              channel.name,
+              channelDescription: channel.description,
+              icon: 'launch_background',
+            ),
+          ),
+        );
+      }
+    });
+
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      developer.log('A new onMessageOpenedApp event was published!');
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final mainProvider = Provider.of<MainProvider>(context, listen: true);
@@ -112,5 +148,10 @@ class _MyAppState extends State<MyApp> {
             home: HomeTabBar(),
             theme: AppTheme.themeData(mode ?? true),*/
         });
+  }
+
+  _getTokenFCM() async {
+    String? token = await FirebaseMessaging.instance.getToken();
+    developer.log(token!);
   }
 }
