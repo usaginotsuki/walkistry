@@ -48,6 +48,7 @@ class MainProvider extends ChangeNotifier {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       _token = prefs.getString("token") ?? "";
       _mode = prefs.getBool('mode') ?? true;
+      _userId = prefs.getString("userId") ?? "";
       return true;
     } catch (e) {
       return false;
@@ -55,8 +56,7 @@ class MainProvider extends ChangeNotifier {
   }
 
   logout() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-
+    updateUID("");
     _updateToken("");
     notifyListeners();
   }

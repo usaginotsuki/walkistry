@@ -47,24 +47,7 @@ class GeneralSettingsPage extends StatelessWidget {
             trailing: Icon(Icons.arrow_forward_ios),
             onTap: () {
               mainProvider.token = '';
-              Navigator.pushAndRemoveUntil(
-                  context,
-                  PageRouteBuilder(pageBuilder: (BuildContext context,
-                      Animation animation, Animation secondaryAnimation) {
-                    return LoginPage();
-                  }, transitionsBuilder: (BuildContext context,
-                      Animation<double> animation,
-                      Animation<double> secondaryAnimation,
-                      Widget child) {
-                    return new SlideTransition(
-                      position: new Tween<Offset>(
-                        begin: const Offset(1.0, 0.0),
-                        end: Offset.zero,
-                      ).animate(animation),
-                      child: child,
-                    );
-                  }),
-                  (Route route) => false);
+              Navigator.popAndPushNamed(context, '/login');
             },
           ),
           ListTile(

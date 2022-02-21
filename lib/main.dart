@@ -133,6 +133,8 @@ class _MyAppState extends State<MyApp> {
                   "/login": (context) => const LoginPage(),
                   "/settings": (context) => const GeneralSettingsPage(),
                   "/signup": (context) => const SignUpPage(),
+                  "/homepage": (context) => const HomeTabBar(),
+                  
                 },
                 home: mainProvider.token == ""
                     ? const LoginPage()

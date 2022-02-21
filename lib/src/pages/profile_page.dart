@@ -41,6 +41,7 @@ class _UserPageState extends State<UserPage> {
   @override
   Widget build(BuildContext context) {
     final mainProvider = Provider.of<MainProvider>(context);
+    developer.log(mainProvider.userId.toString(), name: "UserPage - ID");
     return SizedBox(
       height: 350,
       child: Scaffold(
@@ -96,7 +97,8 @@ class _UserPageState extends State<UserPage> {
                 labelStyle: TextStyle(fontSize: 18.0),
                 onTap: () {
                   mainProvider.logout();
-                  Navigator.pushAndRemoveUntil(
+                  Navigator.popAndPushNamed(context, '/login');
+                  /*Navigator.pushAndRemoveUntil(
                       context,
                       PageRouteBuilder(pageBuilder: (BuildContext context,
                           Animation animation, Animation secondaryAnimation) {
@@ -113,7 +115,7 @@ class _UserPageState extends State<UserPage> {
                           child: child,
                         );
                       }),
-                      (Route route) => false);
+                      (Route route) => false);*/
                 },
               ),
             ],

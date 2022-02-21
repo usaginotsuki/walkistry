@@ -182,6 +182,8 @@ class _SignUpPageState extends State<SignUpPage> {
                                                       developer.log(
                                                           mainProvider.token,
                                                           name: "Token");
+                                                      Navigator.popAndPushNamed(
+                                                          context, '/homepage');
                                                     }
                                                   }
                                                 : null

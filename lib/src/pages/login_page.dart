@@ -161,12 +161,6 @@ class _LoginPageState extends State<LoginPage> {
                                                             resp['idToken'];
                                                         mainProvider.userId =
                                                             resp['localId'];
-                                                        developer.log(
-                                                            mainProvider.token,
-                                                            name: "Token");
-                                                        developer.log(
-                                                            mainProvider.userId,
-                                                            name: "UserID");
                                                       }
                                                     }
                                                   : null,
@@ -217,19 +211,32 @@ class _LoginPageState extends State<LoginPage> {
                                     // Once signed in, return the UserCredential
                                     var answer = await FirebaseAuth.instance
                                         .signInWithCredential(credential);
-                                    developer.log("Answer: $answer",
-                                        name: "Login");
-
+                                    _googleSignIn.signIn().then((result) {
+                                      result!.authentication.then((googleKey) {
+                                        mainProvider.token =
+                                            (googleKey.idToken.toString());
+                                        developer.log(mainProvider.token,
+                                            name: "Token - MainProvider");
+                                      }).catchError((err) {
+                                        print('inner error');
+                                      });
+                                    }).catchError((err) {
+                                      print('error occured');
+                                    });
                                     final login = UsuarioService();
                                     var userID = answer.user!.uid.toString();
                                     developer.log(userID,
                                         name: "UserID - Google");
                                     await login.googleLogIn(userID);
+                                    developer.log(answer.user.toString(),
+                                        name: "User - Google");
                                     mainProvider.userId = userID;
-                                    mainProvider.token = answer.user!.uid;
+
                                     developer.log(
                                         mainProvider.userId.toString(),
                                         name: "User-ID - Provider");
+                                    Navigator.popAndPushNamed(
+                                        context, "/homepage");
                                   });
                                 })
                           ],

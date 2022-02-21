@@ -1,6 +1,5 @@
 import 'package:walkistry_flutter/src/bloc/validator_bloc.dart';
 import 'package:rxdart/rxdart.dart';
-import 'dart:developer' as developer;
 
 class LoginBloc with Validator {
   LoginBloc();
